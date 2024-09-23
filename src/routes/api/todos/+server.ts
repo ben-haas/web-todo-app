@@ -1,9 +1,10 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { API_URL} from '$env/static/private';
 
 export const GET: RequestHandler = async ({ fetch, cookies }) => {
 	const access_token = cookies.get('access-token');
-	const res = await fetch(`http://localhost:8080/v1/todos`, {
+	const res = await fetch(`${API_URL}/v1/todos`, {
 		headers: {
 			'Authorization': `Bearer ${access_token}`
 		}
@@ -20,7 +21,7 @@ export const GET: RequestHandler = async ({ fetch, cookies }) => {
 export const POST: RequestHandler = async ({ fetch, cookies }) => {
 	const access_token = cookies.get('access-token');
 
-	const res = await fetch(`http://localhost:8080/v1/todos`, {
+	const res = await fetch(`${API_URL}/v1/todos`, {
 		method: 'POST',
 		headers: {
 			'Authorization': `Bearer ${access_token}`
@@ -36,5 +37,3 @@ export const POST: RequestHandler = async ({ fetch, cookies }) => {
 	throw error(res.status, res.statusText);
 
 };
-
-//TODO: Add PUT handler

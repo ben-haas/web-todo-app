@@ -1,21 +1,34 @@
 <script lang="ts">
 	import type { PageServerData} from './$types';
+	import TodoItem from '$lib/components/TodoItem.svelte';
 
 	export let data: PageServerData;
 
 	$: todos = data.todos
+	$: completedTodos = todos.filter((todo: {complete: boolean}) => todo.complete)
+	$: incompleteTodos = todos.filter((todo: {complete: boolean}) => !todo.complete)
 </script>
 
-{#if todos && todos.length > 0}
-	<ul>
-		{#each todos as todo}
-			<li>
-				<br>
-				<h3><a href="/todo/{todo.id}">{todo.title}</a></h3>
-				<p>{todo.description}</p>
-				<p>Created By: {todo.user_id}</p>
-				<br>
+<div class="flex justify-center pt-8">
+{#if incompleteTodos && incompleteTodos.length > 0}
+	<ul class="flex flex-col w-1/2">
+		{#each incompleteTodos as todo}
+			<li class="last:border-b border-b-text">
+				<TodoItem todo={todo} />
 			</li>
 		{/each}
 	</ul>
 {/if}
+</div>
+
+<div class="flex justify-center pt-8">
+	{#if completedTodos && completedTodos.length > 0}
+		<ul class="flex flex-col w-1/2">
+			{#each completedTodos as todo}
+				<li class="last:border-b border-b-text opacity-40">
+					<TodoItem todo={todo} />
+				</li>
+			{/each}
+		</ul>
+	{/if}
+</div>

@@ -1,8 +1,9 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { API_URL} from '$env/static/private';
 
 export const POST: RequestHandler = async ({ fetch, request }) => {
-	const res = await fetch('http://localhost:8080/v1/signup', {
+	const res = await fetch(`${API_URL}/v1/signup`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

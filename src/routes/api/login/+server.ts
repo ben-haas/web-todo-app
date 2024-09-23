@@ -1,9 +1,9 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { API_URL} from '$env/static/private';
 
 export const POST: RequestHandler = async ({ fetch, request, cookies }) => {
 	const data = await request.json()
-	console.log(data)
 
 	if (!data.email) {
 		throw error(400, 'Username is required');
@@ -13,7 +13,7 @@ export const POST: RequestHandler = async ({ fetch, request, cookies }) => {
 		throw error(400, 'Password is required');
 	}
 
-	const res = await fetch('http://localhost:8080/v1/login', {
+	const res = await fetch(`${API_URL}/v1/login`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
