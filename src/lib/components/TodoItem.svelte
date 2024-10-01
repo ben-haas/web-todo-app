@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="flex items-center p-4 border-t border-t-text max-w-3xl">
+<div class="flex items-center p-4 border-t border-t-mauve max-w-3xl">
 	<div class="flex-grow">
 		<div class="text-lg font-medium text-text">{todo.title}</div>
 		<div class="text-sm text-text flex items-center">
