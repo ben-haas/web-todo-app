@@ -43,6 +43,8 @@
 		"@fortawesome/free-regular-svg-icons": "^6.6.0",
 		"@fortawesome/free-solid-svg-icons": "^6.6.0",
 		"svelte-fa": "^4.0.2",
-		"uuid": "^10.0.0"
+		"uuid": "^10.0.0",
+		"z": "^1.0.9",
+		"zod-form-data": "^2.0.2"
 	}
 }
