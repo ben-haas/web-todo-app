@@ -10,7 +10,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
   }
 
   try {
-    const todos = await loadTodos(accessToken);
+    const res = await loadTodos(accessToken);
+    const todos = await res.json()
     return { todos };
   } catch (error) {
     console.error('Failed to load todos:', error);

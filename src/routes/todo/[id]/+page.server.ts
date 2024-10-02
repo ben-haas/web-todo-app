@@ -1,16 +1,22 @@
-import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
+import { getTodoById } from '$lib/server/database';
 
-export const load: PageServerLoad = async ({ fetch, params }) => {
-	const res = await fetch(`/api/todos/${params.id}`);
+export const load: PageServerLoad = async ({ cookies, params }) => {
 
-	if (res.ok) {
-		const todo = await res.json();
-		return {
-			todo,
-		};
-	}
+  const accessToken = cookies.get('access-token')
 
-	const errorJSON = await res.json();
-	throw error(res.status, errorJSON.message);
+  if (!accessToken) {
+    throw redirect(307, '/login')
+  }
+
+  try {
+    const res = await getTodoById(params.id, accessToken);
+    const todo = await res.json()
+    return { todo };
+  } catch (error) {
+    console.error('Failed to load todo:', error);
+    throw error;
+  }
+
 };
