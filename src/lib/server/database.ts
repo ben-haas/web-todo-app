@@ -63,10 +63,10 @@ export const loadTodos = async (token: string) => {
 
 }
 
-export const getTodoById = async (id: number, token: string) => {
+export const getTodoById = async (id: string, token: string) => {
 
   const res = await fetch(`${API_URL}/v1/todos/${id}`, {
-    method: 'PUT',
+    method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -98,3 +98,21 @@ export const createTodo = async (todo: Todo, token: string) => {
   throw error(res.status, res.statusText);
 
 };
+
+export const updateTodo = async (todo: Todo, token: string) => {
+
+  const res = await fetch(`${API_URL}/v1/todos/${todo.id}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(todo)
+  });
+
+  if (res.ok) {
+    const todo = await res.json();
+
+    return json(todo, { status: 204 });
+  }
+
+}
